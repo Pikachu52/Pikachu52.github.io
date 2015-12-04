@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+		<style>
+		</style>
+	</head>
+	<body>
+		<form>
+			Number of Fish: <input id="fishNum" type="text" name="fishNum">
+		</form>
+		<p id="fish"></p>
+		<p id="goldFishImage"></p>
+		<p id="blueFishImage"></p>
+		<p id="greenFishImage"></p>
+		<script>
+			function setNumFish(){
+				numFish = parseInt(document.getElementById('fishNum').value);
+				return numFish;
+			}
+			//Is used to check the number of fish and show how many of each fish are needed, is for testing only
+			/*function showFish(){
+				goldFish = (numFish-numFish%10)/10;
+				blueFish = ((numFish%10)-(numFish%10)%5)/5;
+				greenFish = numFish-goldFish*10-blueFish*5;
+
+				document.getElementById("fish").innerHTML= goldFish + "<br>" + blueFish + "<br>" + greenFish;
+			}*/
+			
+			function setGoldFish(){
+				goldFish = (numFish-numFish%10)/10;
+				return goldFish;
+			}
+			function setBlueFish(){
+				blueFish = ((numFish%10)-(numFish%10)%5)/5;
+				return blueFish;
+			}
+			function setGreenFish(){
+				greenFish = numFish-goldFish*10-blueFish*5;
+				return greenFish;
+			}
+			function clearFish(){
+				document.getElementById("goldFishImage").innerHTML="";	
+				document.getElementById("blueFishImage").innerHTML="";
+				document.getElementById("greenFishImage").innerHTML="";	
+			}
+			function setFish(){
+				setGoldFish();
+				setBlueFish();
+				setGreenFish();
+				clearFish();
+				for(var g = 0; g<goldFish; g++){
+					document.getElementById("goldFishImage").innerHTML+="<img height='10%' width='10%' src='https://stem.instructure.com/courses/1049/files/410644/preview'>"	
+				}
+				for(var b = 0; b<blueFish; b++){
+					document.getElementById("blueFishImage").innerHTML+= "<img height='10%' width='10%' src='https://stem.instructure.com/courses/1049/files/410640/preview'>"
+				}
+				for(var i = 0; i<greenFish; i++){
+					document.getElementById("greenFishImage").innerHTML+= "<img height='10%' width='10%' src='https://stem.instructure.com/courses/1049/files/410643/preview'>"	
+				}
+			}
+			var goldFish = (numFish-numFish%10)/10;
+			var blueFish = ((numFish%10)-(numFish%10)%5)/5;
+			var greenFish = numFish-goldFish*10-blueFish*5;
+			var numFish = parseInt(document.getElementById('fishNum').value);
+			setInterval(setNumFish, 10);
+			//setInterval(showFish, 10);
+			setInterval(setFish, 10);
+			
+		</script>
+	</body>
+</html>
