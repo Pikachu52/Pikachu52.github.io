@@ -1,72 +1,94 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title></title>
+		<title>Paint Splatter</title>
 		<style>
+		canvas{
+			
+		}
+		body{
+			background:black;
+			text-align:center;
+		}
+		h1{
+			color:white;
+		}
 		</style>
 	</head>
 	<body>
-		<form>
-			Number of Fish: <input id="fishNum" type="text" name="fishNum">
-		</form>
-		<p id="fish"></p>
-		<p id="goldFishImage"></p>
-		<p id="blueFishImage"></p>
-		<p id="greenFishImage"></p>
+		<h1 id='splatterPaint'>Splatter Paint</h1>
+		<button type="button" onclick="constantSplatters = setInterval(paintSplatter,1000)" id="start">Start</button>
+		<button type="button" onclick="clearInterval(constantSplatters)" id="stop">Stop</button>
+		<button type="button" onclick="clearscreen()" id="clear">Clear</button>
+		<br>
+		<canvas id="Canvas" width='500px' height='500px' ></canvas>
+		<p id="test"></p>
 		<script>
-			function setNumFish(){
-				numFish = parseInt(document.getElementById('fishNum').value);
-				return numFish;
+		
+		var canvas = document.getElementById('Canvas');
+		var height = canvas.height;
+		var width = canvas.width;
+		var ctx = canvas.getContext("2d");
+		var i = 0;
+		
+		clearscreen()
+		
+		function randomColor(){
+			var r = Math.floor(Math.random()* 256);
+			var g = Math.floor(Math.random()* 256);
+			var b = Math.floor(Math.random()* 256);
+			
+			var hexR = r.toString(16);
+			var hexG = g.toString(16);
+			var hexB = b.toString(16);
+			
+			if(hexR.length == 1){
+				hexR = "0" + hexR;
 			}
-			//Is used to check the number of fish and show how many of each fish are needed, is for testing only
-			/*function showFish(){
-				goldFish = (numFish-numFish%10)/10;
-				blueFish = ((numFish%10)-(numFish%10)%5)/5;
-				greenFish = numFish-goldFish*10-blueFish*5;
-
-				document.getElementById("fish").innerHTML= goldFish + "<br>" + blueFish + "<br>" + greenFish;
+			
+			if(hexG.length == 1){
+				hexG = "0" + hexG;
+			}
+			
+			if(hexB.length == 1){
+				hexB = "0" + hexB;
+			}
+		
+			var color = "#" + hexR + hexG + hexB;
+			return color;
+		}
+		
+		
+		function splatter(){
+				var color = randomColor();
+				for(var s = 0; s < 5; s++){
+					var radius = Math.floor((Math.random()*15)+5)
+					//var RADIUS = 15;
+					var xCoord = Math.floor(Math.random()*(width-2*radius)+radius);
+					var yCoord = Math.floor(Math.random()*(height-2*radius)+radius);
+					ctx.beginPath();
+					ctx.arc(xCoord, yCoord, radius, 0, 2*Math.PI);
+					ctx.stroke();
+					ctx.fillStyle = color;
+					ctx.fill();
+				}
+			}
+		function clearscreen(){
+				ctx.rect(0,0,width,height);
+				ctx.stroke();
+				ctx.fillStyle = "white";
+				ctx.fill();
+		}
+		
+		function paintSplatter(){
+			//if(i%2 == 0){
+				splatter();
+				/*i = i+1; 
+			}else{
+				clearscreen();
+				i = i+1;
 			}*/
-			
-			function setGoldFish(){
-				goldFish = (numFish-numFish%10)/10;
-				return goldFish;
-			}
-			function setBlueFish(){
-				blueFish = ((numFish%10)-(numFish%10)%5)/5;
-				return blueFish;
-			}
-			function setGreenFish(){
-				greenFish = numFish-goldFish*10-blueFish*5;
-				return greenFish;
-			}
-			function clearFish(){
-				document.getElementById("goldFishImage").innerHTML="";	
-				document.getElementById("blueFishImage").innerHTML="";
-				document.getElementById("greenFishImage").innerHTML="";	
-			}
-			function setFish(){
-				setGoldFish();
-				setBlueFish();
-				setGreenFish();
-				clearFish();
-				for(var g = 0; g<goldFish; g++){
-					document.getElementById("goldFishImage").innerHTML+="<img height='10%' width='10%' src='https://stem.instructure.com/courses/1049/files/410644/preview'>"	
-				}
-				for(var b = 0; b<blueFish; b++){
-					document.getElementById("blueFishImage").innerHTML+= "<img height='10%' width='10%' src='https://stem.instructure.com/courses/1049/files/410640/preview'>"
-				}
-				for(var i = 0; i<greenFish; i++){
-					document.getElementById("greenFishImage").innerHTML+= "<img height='10%' width='10%' src='https://stem.instructure.com/courses/1049/files/410643/preview'>"	
-				}
-			}
-			var goldFish = (numFish-numFish%10)/10;
-			var blueFish = ((numFish%10)-(numFish%10)%5)/5;
-			var greenFish = numFish-goldFish*10-blueFish*5;
-			var numFish = parseInt(document.getElementById('fishNum').value);
-			setInterval(setNumFish, 10);
-			//setInterval(showFish, 10);
-			setInterval(setFish, 10);
-			
+		}
 		</script>
 	</body>
 </html>
